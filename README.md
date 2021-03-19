@@ -53,34 +53,20 @@ No Modules.
 | Name |
 |------|
 | [azurerm_network_interface](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) |
-| [azurerm_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) |
+| [azurerm_resource_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) |
+| [azurerm_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) |
+| [azurerm_virtual_network](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) |
+| [azurerm_windows_virtual_machine](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_virtual_machine) |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| capacity | n/a | `number` | `1` | no |
 | common\_tags | This is to help you add tags to your cloud objects | `map(any)` | n/a | yes |
-| connection\_name | n/a | `string` | `"examplea-private"` | no |
-| day\_of\_week | Monday Tuesday Wednesday Thursday Friday Saturday Sunday | `string` | `"Monday"` | no |
-| endpoint\_name | n/a | `string` | `"examplea-private"` | no |
-| family | n/a | `string` | `"C"` | no |
-| minimum\_tls\_version | n/a | `string` | `"1.2"` | no |
-| nsg\_name | n/a | `string` | `"examplea"` | no |
-| redis\_config | n/a | `map` | <pre>{<br>  "aof_backup_enabled": false,<br>  "maxfragmentationmemory_reserved": 50,<br>  "maxmemory_delta": 50,<br>  "maxmemory_policy": "volatile-lru",<br>  "maxmemory_reserved": 50,<br>  "rdb_backup_enabled": false,<br>  "rdb_backup_max_snapshot_count": 0<br>}</pre> | no |
-| redis\_name | n/a | `string` | `"examplea-cache"` | no |
-| resource\_group | n/a | `any` | n/a | yes |
-| sku\_name | n/a | `string` | `"Standard"` | no |
-| subnet | n/a | `any` | n/a | yes |
-| vnet | n/a | `any` | n/a | yes |
-| zone\_name | The name of the private DNS zone | `string` | `"privatelink.redis.cache.windows.net"` | no |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| cache | n/a |
-| endpoint | n/a |
+No output.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Related Projects
