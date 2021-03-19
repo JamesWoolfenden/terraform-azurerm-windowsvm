@@ -23,6 +23,7 @@ plan:
 planned: init
 	terraform plan -out tf.plan
 	terraform show -json tf.plan  > tf.json
+	rm tf.plan
 	checkov -f tf.json
 
 p:
@@ -49,7 +50,6 @@ valid:
 	-terraform fmt -recursive
 	-checkov -d . --external-checks-dir ../../checkov
 	-tfsec .
-	-terrascan scan
 	docker pull checkmarx/kics:latest
 	docker run -v $(CURDIR):/path checkmarx/kics:latest -p "/path"
 
