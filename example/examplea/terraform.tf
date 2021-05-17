@@ -5,5 +5,13 @@ terraform {
       source  = "hashicorp/azurerm"
     }
   }
+  
+  backend "remote" {
+    organization = "wolf"
+
+    workspaces {
+      name = "azurerm-windowsvm"
+    }
+  }
   required_version = ">=0.14.8"
 }
