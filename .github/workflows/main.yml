@@ -35,7 +35,7 @@ jobs:
       - name: install az
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       - name: login
-        run: az login --service-principal -u http://azure-cli-2021-05-17-08-44-47 -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
+        run: az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
       - name: Terraform Init
