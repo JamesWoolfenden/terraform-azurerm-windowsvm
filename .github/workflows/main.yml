@@ -9,7 +9,7 @@ on:
     branches:
       - main
 env:
-  terraform: 0.14.8
+  terraform: 0.15.0
   tf_target_dir: example/examplea
   branch: main
 jobs:
@@ -21,6 +21,7 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Do not change
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
     runs-on: ubuntu-latest
     defaults:
       run:
