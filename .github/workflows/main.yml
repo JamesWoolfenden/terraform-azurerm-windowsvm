@@ -40,16 +40,13 @@ jobs:
         uses: hashicorp/setup-terraform@v1
       - name: Terraform Init
         run : terraform init
-        with:
-          working-directory: ${{ env.tf_target_dir }}
+        working-directory: ${{ env.tf_target_dir }}
       - name: Terraform Validate
-        uses: terraform validate
-        with:
-          working-directory: ${{ env.tf_target_dir }}
+        run: terraform validate
+        working-directory: ${{ env.tf_target_dir }}
       - name: Terraform Plan
         run: terraform plan
-        with:
-          working-directory: ${{ env.tf_target_dir }}
+        working-directory: ${{ env.tf_target_dir }}
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET$: ${{ secrets.ARM_CLIENT_SECRET }}
