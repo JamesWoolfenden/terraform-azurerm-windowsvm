@@ -39,7 +39,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
       - name: Terraform Init
-        run : terraform init
+        run: terraform init
         working-directory: ${{ env.tf_target_dir }}
       - name: Terraform Validate
         run: terraform validate
