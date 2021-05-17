@@ -14,30 +14,41 @@ env:
   branch: main
 jobs:
   terraform:
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET$: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Do not change
+    runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{ env.tf_target_dir }}
-    runs-on: ubuntu-latest
+        shell: bash
     steps:
-      - uses: hashicorp/setup-terraform@v1
       - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: ${{ env.branch }}
           token: ${{ github.token }}
-      - name: az cli
-        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       - name: Terraform Init
-        run: terraform init
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env.terraform }}
+          tf_actions_subcommand: init
+          tf_actions_working_dir: ${{ env.tf_target_dir }}
       - name: Terraform Validate
-        run: terraform validate
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env.terraform }}
+          tf_actions_subcommand: validate
+          tf_actions_working_dir: ${{ env.tf_target_dir }}
       - name: Terraform Plan
-        run: terraform plan
-        env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET$: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env.terraform }}
+          tf_actions_subcommand: plan
+          tf_actions_working_dir: ${{ env.tf_target_dir }}
       - name: costings
         run: |
           pip3 install lastversion
@@ -46,13 +57,6 @@ jobs:
           tar -xvf infracost*.tar.gz --directory $GITHUB_WORKSPACE/bin
           chmod +x $GITHUB_WORKSPACE/bin/infracost-linux-amd64
           $GITHUB_WORKSPACE/bin/infracost-linux-amd64 breakdown --path ${{ env.tf_target_dir }} --usage-file ${{ env.tf_target_dir }}/infracost-usage.yml
-        env:
-          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Do not change
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET$: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
   security:
     runs-on: ubuntu-latest
     steps:
@@ -78,7 +82,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Bump version and push tag
-        if: ${{ !env.ACT }}
         uses: anothrNick/github-tag-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
