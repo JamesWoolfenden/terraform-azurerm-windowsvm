@@ -31,6 +31,8 @@ jobs:
         with:
           ref: ${{ env.branch }}
           token: ${{ github.token }}
+      - name: install az
+        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       - name: Terraform Init
         uses: hashicorp/terraform-github-actions@master
         with:
