@@ -1,7 +1,3 @@
-variable "common_tags" {
-  description = "This is to help you add tags to your cloud objects"
-  type        = map(any)
-}
 
 
 variable "admin_password" {
@@ -12,3 +8,41 @@ variable "admin_password" {
 variable "resource_group" {}
 
 variable "network_interface" {}
+
+
+variable "image" {
+  type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+    version   = string
+  })
+  default = {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2016-Datacenter"
+    version   = "latest"
+  }
+}
+
+
+variable "vm" {
+  type = object({
+    name           = string
+    size           = string
+    admin_username = string
+    os_disk = object({
+      caching              = string
+      storage_account_type = string
+    })
+  })
+  default = {
+    admin_username = "adminuser"
+    name           = "myfirstwinvm"
+    size           = "Standard_F2"
+    os_disk = {
+      caching              = "ReadWrite"
+      storage_account_type = "Standard_LRS"
+    }
+  }
+}

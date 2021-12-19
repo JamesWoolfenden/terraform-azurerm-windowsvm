@@ -1,26 +1,27 @@
 
 
 resource "azurerm_windows_virtual_machine" "example" {
-  name                       = "example-machine"
+  name                       = var.vm.name
   resource_group_name        = var.resource_group.name
   location                   = var.resource_group.location
-  size                       = "Standard_F2"
-  admin_username             = "adminuser"
+  size                       = var.vm.size
+  admin_username             = var.vm.admin_username
   admin_password             = var.admin_password
   allow_extension_operations = false
+
   network_interface_ids = [
     var.network_interface.id,
   ]
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    caching              = var.vm.os_disk.caching
+    storage_account_type = var.vm.os_disk.storage_account_type
   }
 
   source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
-    version   = "latest"
+    publisher = var.image.publisher
+    offer     = var.image.offer
+    sku       = var.image.sku
+    version   = var.image.version
   }
 }
