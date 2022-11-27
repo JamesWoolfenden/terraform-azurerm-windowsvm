@@ -68,6 +68,50 @@ No modules.
 | <a name="output_vm"></a> [vm](#output\_vm) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
+## Policy
+
+This is the policy required to build this project:
+
+<!-- BEGINNING OF PRE-COMMIT-PIKE DOCS HOOK -->
+The Terraform resource required is:
+
+```golang
+
+resource "azurerm_role_definition" "terraform_pike" {
+  role_definition_id = local.uuid
+  name               = "terraform_pike"
+  scope              = data.azurerm_subscription.primary.id
+
+  permissions {
+    actions = [
+    "Microsoft.Compute/disks/delete",
+    "Microsoft.Compute/disks/read",
+    "Microsoft.Compute/virtualMachines/delete",
+    "Microsoft.Compute/virtualMachines/powerOff/action",
+    "Microsoft.Compute/virtualMachines/read",
+    "Microsoft.Compute/virtualMachines/write",
+    "Microsoft.Network/networkInterfaces/join/action",
+    "Microsoft.Network/networkInterfaces/read",
+    "Microsoft.Resources/subscriptions/resourcegroups/read"]
+    not_actions = []
+  }
+
+  assignable_scopes = [
+    data.azurerm_subscription.primary.id,
+  ]
+}
+
+locals {
+  uuid = uuid()
+}
+
+data "azurerm_subscription" "primary" {
+}
+
+
+```
+<!-- END OF PRE-COMMIT-PIKE DOCS HOOK -->
+
 ## Related Projects
 
 Check out these related projects.
@@ -90,7 +134,7 @@ Please use the [issue tracker](https://github.com/JamesWoolfenden/terraform-azur
 
 ## Copyrights
 
-Copyright 2021 James Woolfenden
+Copyright 2021-22 James Woolfenden
 
 ## License
 
@@ -121,11 +165,3 @@ under the License.
 
 [jameswoolfenden_homepage]: https://github.com/jameswoolfenden
 [jameswoolfenden_avatar]: https://github.com/jameswoolfenden.png?size=150
-[github]: https://github.com/jameswoolfenden
-[linkedin]: https://www.linkedin.com/in/jameswoolfenden/
-[twitter]: https://twitter.com/JimWoolfenden
-[share_twitter]: https://twitter.com/intent/tweet/?text=terraform-azurerm-windowsvm&url=https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm
-[share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-azurerm-windowsvm&url=https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm
-[share_reddit]: https://reddit.com/submit/?url=https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm
-[share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm
-[share_email]: mailto:?subject=terraform-azurerm-windowsvm&body=https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm

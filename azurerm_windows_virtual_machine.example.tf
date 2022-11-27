@@ -24,4 +24,5 @@ resource "azurerm_windows_virtual_machine" "example" {
     sku       = var.image.sku
     version   = var.image.version
   }
+  encryption_at_host_enabled = true
 }
