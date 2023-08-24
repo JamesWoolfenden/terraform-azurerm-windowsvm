@@ -10,7 +10,7 @@ resource "azurerm_windows_virtual_machine" "example" {
   allow_extension_operations = false
 
   network_interface_ids = [
-    var.network_interface.id,
+    azurerm_network_interface.example.id
   ]
 
   os_disk {

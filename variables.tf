@@ -7,8 +7,6 @@ variable "admin_password" {
 
 variable "resource_group" {}
 
-variable "network_interface" {}
-
 
 variable "image" {
   type = object({
@@ -25,6 +23,9 @@ variable "image" {
   }
 }
 
+variable "subnet_id" {
+  type = string
+}
 
 variable "vm" {
   type = object({

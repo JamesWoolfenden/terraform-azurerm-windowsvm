@@ -1,6 +1,6 @@
 # terraform-azurerm-windowsvm
 
-[![Build Status](https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm/workflows/Verify%20and%20Bump/badge.svg?branch=main)](https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm)
+[![Build Status](https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm/workflows/Verify/badge.svg?branch=main)](https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm)
 [![Latest Release](https://img.shields.io/github/release/JamesWoolfenden/terraform-azurerm-windowsvm.svg)](https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm/releases/latest)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/JamesWoolfenden/terraform-azurerm-windowsvm.svg?label=latest)](https://github.com/JamesWoolfenden/terraform-azurerm-windowsvm/releases/latest)
 ![Terraform Version](https://img.shields.io/badge/tf-%3E%3D0.14.0-blue.svg)
@@ -9,7 +9,7 @@
 [![checkov](https://img.shields.io/badge/checkov-verified-brightgreen)](https://www.checkov.io/)
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/jameswoolfenden/terraform-azurerm-windowsvm/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=JamesWoolfenden%2Fterraform-azurerm-windowsvm&benchmark=INFRASTRUCTURE+SECURITY)
 
-This is module to help you deploy Win VMS ON AZURE.
+This module is designed to help you deploy Win VMS ON AZURE.
 
 ## Usage
 
@@ -24,7 +24,7 @@ module "vm" {
 
 ```
 
-Supply values for your resource and database name, other values have defaults which can be over ridden.
+Supply values for your resource and database name, other values have defaults that can be overridden.
 
 ---
 
@@ -49,6 +49,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [azurerm_network_interface.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
 | [azurerm_windows_virtual_machine.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_virtual_machine) | resource |
 
 ## Inputs
@@ -57,8 +58,8 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | n/a | `string` | n/a | yes |
 | <a name="input_image"></a> [image](#input\_image) | n/a | <pre>object({<br>    publisher = string<br>    offer     = string<br>    sku       = string<br>    version   = string<br>  })</pre> | <pre>{<br>  "offer": "WindowsServer",<br>  "publisher": "MicrosoftWindowsServer",<br>  "sku": "2016-Datacenter",<br>  "version": "latest"<br>}</pre> | no |
-| <a name="input_network_interface"></a> [network\_interface](#input\_network\_interface) | n/a | `any` | n/a | yes |
 | <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | n/a | `any` | n/a | yes |
+| <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | n/a | `string` | n/a | yes |
 | <a name="input_vm"></a> [vm](#input\_vm) | n/a | <pre>object({<br>    name           = string<br>    size           = string<br>    admin_username = string<br>    os_disk = object({<br>      caching              = string<br>      storage_account_type = string<br>    })<br>  })</pre> | <pre>{<br>  "admin_username": "adminuser",<br>  "name": "myfirstwinvm",<br>  "os_disk": {<br>    "caching": "ReadWrite",<br>    "storage_account_type": "Standard_LRS"<br>  },<br>  "size": "Standard_F2"<br>}</pre> | no |
 
 ## Outputs
@@ -90,8 +91,12 @@ resource "azurerm_role_definition" "terraform_pike" {
     "Microsoft.Compute/virtualMachines/powerOff/action",
     "Microsoft.Compute/virtualMachines/read",
     "Microsoft.Compute/virtualMachines/write",
+    "Microsoft.Network/networkInterfaces/delete",
     "Microsoft.Network/networkInterfaces/join/action",
     "Microsoft.Network/networkInterfaces/read",
+    "Microsoft.Network/networkInterfaces/write",
+    "Microsoft.Network/virtualNetworks/subnets/join/action",
+    "Microsoft.Network/virtualNetworks/subnets/read",
     "Microsoft.Resources/subscriptions/resourcegroups/read"]
     not_actions = []
   }
@@ -134,7 +139,7 @@ Please use the [issue tracker](https://github.com/JamesWoolfenden/terraform-azur
 
 ## Copyrights
 
-Copyright 2021-22 James Woolfenden
+Copyright 2021-23 James Woolfenden
 
 ## License
 
